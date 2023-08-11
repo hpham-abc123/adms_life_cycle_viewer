@@ -180,7 +180,14 @@ sub fetch_component_class_defn{
         my $rdbms = shift;
     my @ccd = ();
     my $sql=q{
-select COMPONENT_CLASS_INDEX, COMPONENT_CLASS_NAME from component_class_defn ccd order by 2,1
+SELECT
+    component_class_index,
+    component_class_name
+FROM
+    component_class_defn ccd
+WHERE
+    component_life_cycle IS NOT NULL
+ORDER BY 2, 1
 };
     my $sth = $rdbms->prepare($sql);
     $sth->execute();
